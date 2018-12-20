@@ -1,4 +1,4 @@
-importScripts('https://bgrins.github.io/videoconverter.js/build/ffmpeg.js');
+importScripts('ffmpeg.js');
 function print(text){
   postMessage({'type':'stdout','data':text});
 }
