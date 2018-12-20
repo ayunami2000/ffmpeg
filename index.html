@@ -15,7 +15,7 @@
           outputElement.textContent = "Loaded";
           worker.postMessage({
             type: 'command',
-            arguments: ['-help']
+            arguments: [prompt('args, split with ","').split(',')]
           })
         } else if (message.type == "stdout") {
           outputElement.textContent += message.data + "\n";
