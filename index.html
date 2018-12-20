@@ -1,11 +1,28 @@
 <!DOCTYPE html>
-<html>
-<head>
-<title>ffmpeg in js</title>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-</head>
-<body>
-abc
-<script src="worker.js"></script>
-</body>
+  <html>
+    <head>
+      <title>ffmpeg in js</title>
+      <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    </head>
+  <body>
+    <pre></pre>
+    <script src="worker.js"></script>
+    <script>
+      var worker = new Worker("worker.js"),outputElement=document.querySelector('pre');
+      worker.onmessage = function (event) {
+        var message = event.data;
+        if (message.type == "ready") {
+          outputElement.textContent = "Loaded";
+          worker.postMessage({
+            type: 'command',
+            arguments: ['-help']
+          })
+        } else if (message.type == "stdout") {
+          outputElement.textContent += message.data + "\n";
+        } else if (message.type == "start") {
+          outputElement.textContent = "Worker has received command\n";
+        }
+      };
+    </script>
+  </body>
 </html>
